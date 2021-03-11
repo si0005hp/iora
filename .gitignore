@@ -1,5 +1,6 @@
 build/
 .antlr/
+.vscode/
 dist/
 generated/
 tmp/

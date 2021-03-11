@@ -2,11 +2,15 @@ grammar Iora
     ;
 
 program
-    : (iora)+
+    : statement+
     ;
 
-iora
-    : 'iora' eos
+statement
+    : 'iora' NUMBER eos
+    ;
+
+NUMBER
+    : [0-9]+
     ;
 
 eos
