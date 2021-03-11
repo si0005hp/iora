@@ -11,6 +11,7 @@ macro(package_add_test TESTNAME)
   target_include_directories(${TESTNAME} PUBLIC 
     .
     ..
+    ../src
   )
 
   gtest_discover_tests(${TESTNAME}
@@ -21,5 +22,6 @@ macro(package_add_test TESTNAME)
 endmacro()
 
 package_add_test(iora_test
-  test_tmp.cpp
+  LexerTest.cpp
+  ParserTest.cpp
 )

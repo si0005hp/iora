@@ -18,11 +18,15 @@ test:
 antlr4-java:
 	@mkdir -p ${ANTLR4_DIR}/java-target
 	cd ${ANTLR4_DIR} && \
-		java -jar ${ANTLR4_JAR} Iora.g4 -o java-target && \
+		java -jar ${ANTLR4_JAR} IoraLexer.g4 IoraParser.g4 -visitor -o java-target && \
 		javac java-target/*.java
 
-grun: 
+grun:
 	cd ${ANTLR4_DIR}/java-target && java org.antlr.v4.gui.TestRig Iora ${RULE} ${CMD} ${FILE}
+
+grammar_test: antlr4-java
+	cd ${ANTLR4_DIR}/java-target && \
+		find ../grammar_test -type f | xargs java org.antlr.v4.gui.TestRig Iora program -SSL
 
 NO_PHONY = /^(z):/
 .PHONY: $(shell cat $(MAKEFILE_LIST) | awk -F':' '/^[a-z0-9_-]+:/ && !$(NO_PHONY) {print $$1}')

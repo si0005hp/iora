@@ -1,13 +1,37 @@
 #include <iostream>
 
-#include "iora-antlr4.h"
+#include "antlr4.h"
 
 using namespace antlr4;
 using namespace antlrcpptest;
 
+static void printTree(CommonTokenStream &ts)
+{
+    IoraParser parser(&ts);
+    std::cout << parser.program()->toStringTree(&parser) << std::endl;
+}
+
+static void printTokens(CommonTokenStream &ts)
+{
+    // IoraParser parser(&ts);
+    ts.fill();
+    for (auto &t : ts.getTokens()) std::cout << t->toString() << std::endl;
+}
+
+static void runFile(CommonTokenStream &ts)
+{
+    ts.fill();
+
+    for (auto token : ts.getTokens())
+    {
+        std::cout << token->toString() << std::endl;
+    }
+}
+
 int main(int argc, char const *argv[])
 {
-    if (argc < 2) {
+    if (argc < 2)
+    {
         std::cerr << "[Usage]: ./iora filename" << std::endl;
         exit(1);
     }
@@ -26,11 +50,11 @@ int main(int argc, char const *argv[])
     CommonTokenStream ts(&lexer);
     IoraParser parser(&ts);
 
-    auto ctx = parser.program();
-    for (auto & stmt : ctx->statement())
-    {
-        std::cout << stmt->NUMBER()->getText() << std::endl;
-    }
-
+    if (false)
+        printTokens(ts);
+    else if (false)
+        printTree(ts);
+    else
+        runFile(ts);
     return 0;
 }
